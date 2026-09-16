@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "decision_id": "DEC-VERSION-ROADMAP-001",
+  "title": "接受或修改《烬火旅团》1.0→3.0 分阶段路线图",
+  "decision_question": "是否用 designos 导出的版本梯子替换「1.0 最小可玩 / 1.5 一次性加厚 / 2.0 当作第一期完整小队 RPG」这一套分期叙事？",
+  "owner": "ylybushirbq",
+  "status": "accepted",
+  "decision_type": "scope_and_milestone",
+  "boundary_status": "near",
+  "stakes": "high",
+  "reversibility": "costly_to_reverse",
+  "current_default_action": "实现范围继续锁在 docs/v1.0；设计分期以 docs/版本地图.md 为准；不开发 1.1 及以后",
+  "options": [
+    {
+      "option_id": "OPT-001",
+      "action": "接受完整梯子：1.0→1.1→1.2→1.5→2.0（2人切片）→2.1→2.5→3.0",
+      "expected_benefit": "每个大/小版本只验证一个设计核，失败时知道砍什么。",
+      "main_risk": "表面上版本变多，需要维护更多规格边界。"
+    },
+    {
+      "option_id": "OPT-002",
+      "action": "接受梯子但拒绝拆 1.5：1.0→1.1→原 1.5 整包→再进 2.x/3.0",
+      "expected_benefit": "少改已写好的 1.5 文档，仍补上 1.1 品质门和 3.0 安家。",
+      "main_risk": "1.5 仍然一次加入经济与战斗两套系统。"
+    },
+    {
+      "option_id": "OPT-003",
+      "action": "拒绝改分期，维持现文档：1.0 后直接 1.5，再直接按 2.0 全文做「第一期」",
+      "expected_benefit": "不增加设计文档。",
+      "main_risk": "2.0 第一期与仓库 1.0 撞名；小队、ATB、词缀会提前污染实现。"
+    }
+  ],
+  "evidence_refs": [],
+  "assumption_refs": [
+    "ASM-RG-READABLE-001",
+    "ASM-SOLO-LOOP-REPEAT-001",
+    "ASM-PARTY-CHANGES-DECISIONS-001",
+    "ASM-SOLO-DEV-CAPACITY-001"
+  ],
+  "experiment_refs": ["EXP-LOOP-1.0-001"],
+  "gate_refs": ["GATE-1.0", "GATE-1.1", "GATE-1.2", "GATE-1.5", "GATE-2.0", "GATE-2.1", "GATE-2.5", "GATE-3.0"],
+  "decision_result": {
+    "option_id": "OPT-001",
+    "accepted_by": "ylybushirbq",
+    "accepted_at": "2026-09-14",
+    "summary": "接受完整梯子，含拆 1.5 为 1.2 经济循环 + 1.5 战斗加厚；2.0 从 2 人切片起步。"
+  },
+  "rollback_trigger": "若推翻 OPT-001，设计分期回退到「1.0 / 整包 1.5 / 2.0 当第一期」；实现在未另开版本前仍锁 1.0。",
+  "notes": "已回写 docs/版本地图.md、docs/v1.1、docs/v1.2，并重切 docs/v1.5。代码范围不变。"
+}

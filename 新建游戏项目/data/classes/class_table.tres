@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="ClassTable" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://data/classes/class_table.gd" id="1_table"]
+[ext_resource type="Script" path="res://data/classes/class_data.gd" id="2_data"]
+
+[sub_resource type="Resource" id="ClassData_guard"]
+script = ExtResource("2_data")
+id = &"guard"
+display_name = "卫士"
+str = 8
+agi = 4
+intl = 2
+con = 8
+spi = 3
+luk = 3
+primary_stat = &"con"
+skill_ids = Array[StringName]([&"guard_basic", &"guard_shield", &"guard_power", &"guard_rage"])
+starter_weapon_id = &"w_sword_1"
+starter_armor_id = &"a_cloth_1"
+
+[sub_resource type="Resource" id="ClassData_sorcerer"]
+script = ExtResource("2_data")
+id = &"sorcerer"
+display_name = "咒术师"
+str = 2
+agi = 4
+intl = 8
+con = 3
+spi = 8
+luk = 3
+primary_stat = &"intl"
+skill_ids = Array[StringName]([&"sorcerer_basic", &"sorcerer_firebolt", &"sorcerer_flame", &"sorcerer_rage"])
+starter_weapon_id = &"w_staff_1"
+starter_armor_id = &"a_cloth_1"
+
+[resource]
+script = ExtResource("1_table")
+classes = [SubResource("ClassData_guard"), SubResource("ClassData_sorcerer")]

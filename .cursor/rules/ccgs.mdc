@@ -1,0 +1,14 @@
+---
+description: CCGS 工作室流程走 $ccgs-studio，代码在新建游戏项目，规格以 1.0 为准
+globs: "{production,design,.claude}/**"
+alwaysApply: false
+---
+
+# Claude Code Game Studios
+
+先读 `docs/CCGS使用说明.md`。Skill 正文在 `I:/cursorworkspace/Claude-Code-Game-Studios/.claude/skills/`。
+
+- 用户写 `/dev-story` 等斜杠命令时，用 `$ccgs-studio` 打开对应 SKILL.md
+- `src/` 映射为 `新建游戏项目/`
+- 玩法权威：`docs/v1.0/最小可玩需求.md`；代码风格：`docs/编码风格.md`
+- 设计证据链走 GameDesignOS，不要和 CCGS 的 epic/story 混成一套目录

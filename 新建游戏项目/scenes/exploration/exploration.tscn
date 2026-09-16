@@ -1,0 +1,62 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/exploration/exploration_view.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/hd2d/hd2d_world.tscn" id="2_world"]
+
+[node name="Exploration" type="Node"]
+script = ExtResource("1_script")
+
+[node name="Hd2dWorld" parent="." instance=ExtResource("2_world")]
+unique_name_in_owner = true
+stage_id = &"exploration"
+allow_free_camera = true
+
+[node name="UiLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Ui" type="Control" parent="UiLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Top" type="MarginContainer" parent="UiLayer/Ui"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 100.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+
+[node name="Row" type="HBoxContainer" parent="UiLayer/Ui/Top"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="NameLabel" type="Label" parent="UiLayer/Ui/Top/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+text = "探索中"
+
+[node name="StatusLabel" type="Label" parent="UiLayer/Ui/Top/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "WASD 移动"
+
+[node name="CameraButton" type="Button" parent="UiLayer/Ui/Top/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 36)
+layout_mode = 2
+text = "重置镜头"
+
+[node name="ReturnButton" type="Button" parent="UiLayer/Ui/Top/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 36)
+layout_mode = 2
+text = "返回据点"

@@ -1,0 +1,274 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scenes/battle/battle_view.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://ui/exp_bar.tscn" id="2_exp"]
+[ext_resource type="PackedScene" path="res://scenes/hd2d/hd2d_world.tscn" id="3_hd2d"]
+
+[node name="Battle" type="Node"]
+script = ExtResource("1_script")
+
+[node name="Hd2dWorld" parent="." instance=ExtResource("3_hd2d")]
+unique_name_in_owner = true
+stage_id = &"battle"
+allow_free_camera = true
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+
+[node name="UiLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Ui" type="Control" parent="UiLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Main" type="MarginContainer" parent="UiLayer/Ui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="UiLayer/Ui/Main"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Top" type="HBoxContainer" parent="UiLayer/Ui/Main/VBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 24
+
+[node name="EnemyBox" type="VBoxContainer" parent="UiLayer/Ui/Main/VBox/Top"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="EnemyName" type="Label" parent="UiLayer/Ui/Main/VBox/Top/EnemyBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "敌人"
+
+[node name="EnemyHpBar" type="ProgressBar" parent="UiLayer/Ui/Main/VBox/Top/EnemyBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+show_percentage = false
+
+[node name="EnemyHpLabel" type="Label" parent="UiLayer/Ui/Main/VBox/Top/EnemyBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "HP 0 / 0"
+
+[node name="TurnLabel" type="Label" parent="UiLayer/Ui/Main/VBox/Top"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "你的回合"
+horizontal_alignment = 2
+
+[node name="Field" type="Control" parent="UiLayer/Ui/Main/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="PlayerBox" type="VBoxContainer" parent="UiLayer/Ui/Main/VBox"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PlayerName" type="Label" parent="UiLayer/Ui/Main/VBox/PlayerBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "玩家"
+
+[node name="PlayerHpBar" type="ProgressBar" parent="UiLayer/Ui/Main/VBox/PlayerBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+show_percentage = false
+
+[node name="PlayerHpLabel" type="Label" parent="UiLayer/Ui/Main/VBox/PlayerBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "HP 0 / 0"
+
+[node name="PlayerMpBar" type="ProgressBar" parent="UiLayer/Ui/Main/VBox/PlayerBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+show_percentage = false
+
+[node name="PlayerMpLabel" type="Label" parent="UiLayer/Ui/Main/VBox/PlayerBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "MP 0 / 0"
+
+[node name="PlayerRgBar" type="ProgressBar" parent="UiLayer/Ui/Main/VBox/PlayerBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+show_percentage = false
+
+[node name="PlayerRgLabel" type="Label" parent="UiLayer/Ui/Main/VBox/PlayerBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "RG 0 / 100"
+
+[node name="LogLabel" type="Label" parent="UiLayer/Ui/Main/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+autowrap_mode = 3
+text = "战斗开始。"
+
+[node name="ActionPanel" type="HBoxContainer" parent="UiLayer/Ui/Main/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="AttackButton" type="Button" parent="UiLayer/Ui/Main/VBox/ActionPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 44)
+layout_mode = 2
+text = "攻击"
+
+[node name="SkillButton" type="Button" parent="UiLayer/Ui/Main/VBox/ActionPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 44)
+layout_mode = 2
+text = "技能"
+
+[node name="DefendButton" type="Button" parent="UiLayer/Ui/Main/VBox/ActionPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 44)
+layout_mode = 2
+text = "防御"
+
+[node name="ItemButton" type="Button" parent="UiLayer/Ui/Main/VBox/ActionPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 44)
+layout_mode = 2
+text = "道具"
+
+[node name="SkillPanel" type="VBoxContainer" parent="UiLayer/Ui/Main/VBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="SkillList" type="VBoxContainer" parent="UiLayer/Ui/Main/VBox/SkillPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="SkillBackButton" type="Button" parent="UiLayer/Ui/Main/VBox/SkillPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 36)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "返回"
+
+[node name="ItemPanel" type="VBoxContainer" parent="UiLayer/Ui/Main/VBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="BandageButton" type="Button" parent="UiLayer/Ui/Main/VBox/ItemPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "绷带"
+
+[node name="WaterButton" type="Button" parent="UiLayer/Ui/Main/VBox/ItemPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "清水"
+
+[node name="ItemBackButton" type="Button" parent="UiLayer/Ui/Main/VBox/ItemPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 36)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "返回"
+
+[node name="BottomRow" type="HBoxContainer" parent="UiLayer/Ui/Main/VBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="AbortButton" type="Button" parent="UiLayer/Ui/Main/VBox/BottomRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 36)
+layout_mode = 2
+text = "退出战斗"
+
+[node name="CameraButton" type="Button" parent="UiLayer/Ui/Main/VBox/BottomRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 36)
+layout_mode = 2
+text = "切换镜头"
+
+[node name="CameraHint" type="Label" parent="UiLayer/Ui/Main/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "镜头：固定（按 C 或按钮切到自由）"
+
+[node name="ResultPanel" type="ColorRect" parent="UiLayer/Ui"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.05, 0.07, 0.92)
+
+[node name="ResultCenter" type="CenterContainer" parent="UiLayer/Ui/ResultPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ResultBox" type="VBoxContainer" parent="UiLayer/Ui/ResultPanel/ResultCenter"]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ResultTitle" type="Label" parent="UiLayer/Ui/ResultPanel/ResultCenter/ResultBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "胜利"
+horizontal_alignment = 1
+
+[node name="ResultBody" type="Label" parent="UiLayer/Ui/ResultPanel/ResultCenter/ResultBox"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="ResultExpBar" parent="UiLayer/Ui/ResultPanel/ResultCenter/ResultBox" instance=ExtResource("2_exp")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ResultContinueButton" type="Button" parent="UiLayer/Ui/ResultPanel/ResultCenter/ResultBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "返回据点"

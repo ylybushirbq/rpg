@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="GameCatalog" load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://data/game_catalog.gd" id="1_script"]
+[ext_resource type="Resource" path="res://data/classes/class_table.tres" id="2_classes"]
+[ext_resource type="Resource" path="res://data/skills/skill_table.tres" id="3_skills"]
+[ext_resource type="Resource" path="res://data/equipment/equipment_table.tres" id="4_equip"]
+[ext_resource type="Resource" path="res://data/enemies/enemy_table.tres" id="5_enemies"]
+[ext_resource type="Resource" path="res://data/encounters/encounter_table.tres" id="6_enc"]
+[ext_resource type="Resource" path="res://data/items/item_table.tres" id="7_items"]
+[ext_resource type="Resource" path="res://data/progression/level_curve.tres" id="8_curve"]
+[ext_resource type="Resource" path="res://data/rules/battle_rules.tres" id="9_rules"]
+
+[resource]
+script = ExtResource("1_script")
+classes = ExtResource("2_classes")
+skills = ExtResource("3_skills")
+equipment = ExtResource("4_equip")
+enemies = ExtResource("5_enemies")
+encounters = ExtResource("6_enc")
+items = ExtResource("7_items")
+level_curve = ExtResource("8_curve")
+rules = ExtResource("9_rules")

@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scenes/hd2d/hd2d_actor_placeholder.gd" id="1_script"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_body"]
+size = Vector3(0.42, 0.18, 0.28)
+
+[sub_resource type="StandardMaterial3D" id="Mat_body"]
+albedo_color = Color(0.22, 0.24, 0.28, 1)
+roughness = 0.85
+
+[node name="Hd2dActorPlaceholder" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="BodyPlaceholder" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09, 0)
+mesh = SubResource("BoxMesh_body")
+surface_material_override/0 = SubResource("Mat_body")
+cast_shadow = 1
+
+[node name="ActorSprite" type="Sprite3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96, 0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+alpha_cut = 2
+texture_filter = 0
+cast_shadow = 1
+
+[node name="Caption" type="Label3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05, 0)
+pixel_size = 0.012
+billboard = 2
+modulate = Color(0.95, 0.93, 0.88, 1)
+outline_modulate = Color(0.08, 0.07, 0.06, 1)
+outline_size = 8
+font_size = 28
+text = ""
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true

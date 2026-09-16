@@ -1,0 +1,19 @@
+---
+description: 用 Godot MCP 改新建游戏项目里的场景、跑游戏、查 UID 时遵守
+globs: "**/*.{gd,tscn,tres,godot,uid}"
+alwaysApply: false
+---
+
+# Godot MCP
+
+Cursor 已接 `godot` MCP（`@coding-solo/godot-mcp`）。`projectPath` = `新建游戏项目` 的绝对路径。编码仍以 `docs/编码风格.md` 为准；MCP 管场景图和运行验证，不代替手写 `.gd`。
+
+| 目的 | 工具 |
+| --- | --- |
+| 新建场景 | `create_scene` → 写脚本 → `save_scene` |
+| 加节点 | `add_node`，`nodeName` PascalCase，随后 Unique Name |
+| 占位图 | `load_sprite` → `assets/placeholder/` |
+| 验证 | `run_project` → `get_debug_output` → `stop_project` |
+| UID | `get_uid` / `update_project_uids`，禁止手改 `.uid` |
+
+不要：擅自 `launch_editor`；把全游戏堆进 `main.tscn`；MCP 失败后编造 `.tscn`；用 MCP 做 C# / 1.1 及以后功能。节点没有 `%` 名时禁止 `$A/B/C` 深路径。

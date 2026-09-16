@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "workspace_id": "ember-brigade",
+  "assumptions": [
+    {
+      "assumption_id": "ASM-RG-READABLE-001",
+      "statement": "玩家能在 1.0 的 1v1 必中战斗里，把 HP/MP/RG 三条资源读成有代价的选择，而不是三条血条。",
+      "type": "player_understanding",
+      "risk_level": "high",
+      "confidence": "low",
+      "linked_decisions": ["DEC-VERSION-ROADMAP-001"],
+      "test_method": "1.0 可玩包 + 3–5 人 think-aloud：打完至少一场野狼或 Boss，口头解释何时该防御、何时该攒怒、何时该用药。",
+      "validation_status": "untested",
+      "kill_condition": "多数玩家把怒技当成「满了就按的大招」，说不出放弃普攻/防御的代价，且补教学文案后仍如此。"
+    },
+    {
+      "assumption_id": "ASM-SOLO-LOOP-REPEAT-001",
+      "statement": "在没有队友的前提下，据点整备→出征→结算→变强 的单人循环值得重复到至少打完一条短路线，并产生「再出征一次」的自发目标。",
+      "type": "retention_loop",
+      "risk_level": "high",
+      "confidence": "low",
+      "linked_decisions": ["DEC-VERSION-ROADMAP-001"],
+      "test_method": "1.0 通关后再观察是否主动刷已打节点或加点换装；1.2/1.5 再验金币是否有去处。",
+      "validation_status": "untested",
+      "kill_condition": "通关或失败后无人愿意再出征，反馈是「系统没了可玩的」，而不是「内容太短」。"
+    },
+    {
+      "assumption_id": "ASM-PARTY-CHANGES-DECISIONS-001",
+      "statement": "增加第二名出战角色会改变战斗决策（职业互补、保护、资源分配），而不是只把总 HP 乘以 2。",
+      "type": "design_nucleus",
+      "risk_level": "high",
+      "confidence": "low",
+      "linked_decisions": ["DEC-VERSION-ROADMAP-001"],
+      "test_method": "2.0 切片：同一条短路线分别用单人档与双人档打，看技能选择与失败原因是否变化。",
+      "validation_status": "untested",
+      "kill_condition": "双人战斗的最优解仍是「全员平砍」或「只操作旅团长」，队友被当作自动炮台。"
+    },
+    {
+      "assumption_id": "ASM-SOLO-DEV-CAPACITY-001",
+      "statement": "当前产能按单人 Godot 4.7 + 静态类型 GDScript、占位美术可接受来规划；不能默认高精度立绘量产、多章节文本和完整手柄一套同时交付。",
+      "type": "production",
+      "risk_level": "medium",
+      "confidence": "medium",
+      "linked_decisions": ["DEC-VERSION-ROADMAP-001"],
+      "test_method": "每通过一座门，用实际上一阶段耗时重估下一阶段，而不是用 2.0 内容下限反推。",
+      "validation_status": "untested",
+      "kill_condition": "为了赶 2.0 内容下限而跳过 1.0 验收，或开始并行开发词缀/ATB/队友。"
+    }
+  ]
+}

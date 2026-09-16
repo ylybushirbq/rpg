@@ -1,0 +1,92 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scenes/hd2d/hd2d_world.gd" id="1_script"]
+[ext_resource type="Script" path="res://scenes/hd2d/hd2d_camera.gd" id="2_cam"]
+[ext_resource type="Environment" path="res://scenes/hd2d/hd2d_environment.tres" id="3_env"]
+[ext_resource type="CameraAttributesPractical" path="res://scenes/hd2d/hd2d_camera_attributes.tres" id="4_attr"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
+size = Vector2(28, 28)
+
+[sub_resource type="StandardMaterial3D" id="Mat_floor"]
+albedo_color = Color(0.34, 0.3, 0.26, 1)
+roughness = 0.9
+metallic = 0.0
+
+[node name="Hd2dWorld" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("3_env")
+camera_attributes = ExtResource("4_attr")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.737277, -0.515076, 0.436793, 0, 0.646675, 0.762766, -0.67559, -0.562172, 0.476809, 4, 10, 6)
+light_color = Color(1, 0.9, 0.72, 1)
+light_energy = 1.45
+light_indirect_energy = 0.8
+light_volumetric_fog_energy = 1.2
+shadow_enabled = true
+shadow_bias = 0.04
+shadow_normal_bias = 1.2
+shadow_blur = 1.15
+directional_shadow_mode = 2
+directional_shadow_max_distance = 42.0
+
+[node name="Fill" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.286788, 0.409576, 0, 0.819152, 0.573577, -0.5, 0.496732, -0.709407, -6, 6, -4)
+light_color = Color(0.45, 0.58, 0.82, 1)
+light_energy = 0.28
+light_specular = 0.2
+light_volumetric_fog_energy = 0.35
+shadow_enabled = false
+
+[node name="Rim" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
+light_color = Color(1, 0.78, 0.48, 1)
+light_energy = 1.6
+light_size = 0.4
+omni_range = 7.5
+omni_attenuation = 1.6
+shadow_enabled = true
+shadow_blur = 1.4
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_floor")
+surface_material_override/0 = SubResource("Mat_floor")
+cast_shadow = 0
+
+[node name="PropHost" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="PlayerSlot" type="Marker3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4, 0, 1.1)
+
+[node name="EnemySlot" type="Marker3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -0.6)
+
+[node name="HubHeroSlot" type="Marker3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 0, 1.4)
+
+[node name="CameraRig" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+script = ExtResource("2_cam")
+
+[node name="CameraPivot" type="Node3D" parent="CameraRig"]
+unique_name_in_owner = true
+
+[node name="CameraBoom" type="Node3D" parent="CameraRig/CameraPivot"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11.5)
+
+[node name="StageCamera" type="Camera3D" parent="CameraRig/CameraPivot/CameraBoom"]
+unique_name_in_owner = true
+fov = 32.0
+near = 0.12
+far = 80.0
+attributes = ExtResource("4_attr")
+current = true

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ItemTable" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://data/items/item_table.gd" id="1_table"]
+[ext_resource type="Script" path="res://data/items/item_data.gd" id="2_data"]
+
+[sub_resource type="Resource" id="Item_bandage"]
+script = ExtResource("2_data")
+id = &"p_hp"
+display_name = "绷带"
+hp_restore = 30
+
+[sub_resource type="Resource" id="Item_water"]
+script = ExtResource("2_data")
+id = &"p_mp"
+display_name = "清水"
+mp_restore = 20
+
+[resource]
+script = ExtResource("1_table")
+items = [SubResource("Item_bandage"), SubResource("Item_water")]

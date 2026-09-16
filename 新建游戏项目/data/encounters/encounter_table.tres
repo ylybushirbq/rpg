@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="EncounterTable" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://data/encounters/encounter_table.gd" id="1_table"]
+[ext_resource type="Script" path="res://data/encounters/encounter_data.gd" id="2_data"]
+
+[sub_resource type="Resource" id="Enc_1"]
+script = ExtResource("2_data")
+id = &"node_1"
+display_name = "节点 1 · 灰鼠"
+enemies = Array[StringName]([&"mob_rat"])
+
+[sub_resource type="Resource" id="Enc_2"]
+script = ExtResource("2_data")
+id = &"node_2"
+display_name = "节点 2 · 灰鼠"
+enemies = Array[StringName]([&"mob_rat"])
+first_drop_ids = Array[StringName]([&"x_ring_1"])
+
+[sub_resource type="Resource" id="Enc_3"]
+script = ExtResource("2_data")
+id = &"node_3"
+display_name = "节点 3 · 野狼"
+enemies = Array[StringName]([&"mob_wolf"])
+first_drop_ids = Array[StringName]([&"a_mail_1"])
+
+[sub_resource type="Resource" id="Enc_4"]
+script = ExtResource("2_data")
+id = &"node_4"
+display_name = "节点 4 · Boss 烬狼"
+enemies = Array[StringName]([&"boss_ember_wolf"])
+first_drop_ids = Array[StringName]([&"x_ring_2"])
+guard_extra_drop_id = &"w_sword_2"
+sorcerer_extra_drop_id = &"w_staff_2"
+
+[resource]
+script = ExtResource("1_table")
+encounters = [SubResource("Enc_1"), SubResource("Enc_2"), SubResource("Enc_3"), SubResource("Enc_4")]

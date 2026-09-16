@@ -1,0 +1,71 @@
+[gd_resource type="Resource" script_class="EquipmentTable" load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://data/equipment/equipment_table.gd" id="1_table"]
+[ext_resource type="Script" path="res://data/equipment/equipment_data.gd" id="2_data"]
+
+[sub_resource type="Resource" id="Eq_w_sword_1"]
+script = ExtResource("2_data")
+id = &"w_sword_1"
+display_name = "练习剑"
+slot = &"weapon"
+class_allowed = Array[StringName]([&"guard"])
+phys_atk = 6
+
+[sub_resource type="Resource" id="Eq_w_staff_1"]
+script = ExtResource("2_data")
+id = &"w_staff_1"
+display_name = "练习杖"
+slot = &"weapon"
+class_allowed = Array[StringName]([&"sorcerer"])
+mag_atk = 6
+
+[sub_resource type="Resource" id="Eq_a_cloth_1"]
+script = ExtResource("2_data")
+id = &"a_cloth_1"
+display_name = "布衣"
+slot = &"armor"
+defense = 2
+hp = 8
+
+[sub_resource type="Resource" id="Eq_x_ring_1"]
+script = ExtResource("2_data")
+id = &"x_ring_1"
+display_name = "铜戒"
+slot = &"accessory"
+defense = 1
+
+[sub_resource type="Resource" id="Eq_w_sword_2"]
+script = ExtResource("2_data")
+id = &"w_sword_2"
+display_name = "铁剑"
+slot = &"weapon"
+class_allowed = Array[StringName]([&"guard"])
+phys_atk = 12
+
+[sub_resource type="Resource" id="Eq_w_staff_2"]
+script = ExtResource("2_data")
+id = &"w_staff_2"
+display_name = "焦木杖"
+slot = &"weapon"
+class_allowed = Array[StringName]([&"sorcerer"])
+mag_atk = 12
+
+[sub_resource type="Resource" id="Eq_a_mail_1"]
+script = ExtResource("2_data")
+id = &"a_mail_1"
+display_name = "铁衣"
+slot = &"armor"
+defense = 6
+hp = 20
+
+[sub_resource type="Resource" id="Eq_x_ring_2"]
+script = ExtResource("2_data")
+id = &"x_ring_2"
+display_name = "旅团徽"
+slot = &"accessory"
+defense = 2
+mp = 8
+
+[resource]
+script = ExtResource("1_table")
+items = [SubResource("Eq_w_sword_1"), SubResource("Eq_w_staff_1"), SubResource("Eq_a_cloth_1"), SubResource("Eq_x_ring_1"), SubResource("Eq_w_sword_2"), SubResource("Eq_w_staff_2"), SubResource("Eq_a_mail_1"), SubResource("Eq_x_ring_2")]

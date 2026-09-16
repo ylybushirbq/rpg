@@ -1,0 +1,120 @@
+[gd_resource type="Resource" script_class="SkillTable" load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://data/skills/skill_table.gd" id="1_table"]
+[ext_resource type="Script" path="res://data/skills/skill_data.gd" id="2_data"]
+
+[sub_resource type="Resource" id="Skill_guard_basic"]
+script = ExtResource("2_data")
+id = &"guard_basic"
+display_name = "普通攻击"
+description = "无消耗。造成伤害：物理攻击 - 敌防御（最低 1）。"
+class_id = &"guard"
+unlock_level = 1
+mp_cost = 0
+rg_cost = 0
+cooldown = 0
+multiplier_num = 10
+multiplier_den = 10
+uses_magic = false
+
+[sub_resource type="Resource" id="Skill_guard_shield"]
+script = ExtResource("2_data")
+id = &"guard_shield"
+display_name = "盾击"
+description = "消耗 MP 8。造成伤害：物理攻击 × 1.2 - 敌防御。"
+class_id = &"guard"
+unlock_level = 1
+mp_cost = 8
+rg_cost = 0
+cooldown = 0
+multiplier_num = 12
+multiplier_den = 10
+uses_magic = false
+
+[sub_resource type="Resource" id="Skill_guard_power"]
+script = ExtResource("2_data")
+id = &"guard_power"
+display_name = "奋力一击"
+description = "消耗 MP 14。造成伤害：物理攻击 × 1.6 - 敌防御。"
+class_id = &"guard"
+unlock_level = 3
+mp_cost = 14
+rg_cost = 0
+cooldown = 0
+multiplier_num = 16
+multiplier_den = 10
+uses_magic = false
+
+[sub_resource type="Resource" id="Skill_guard_rage"]
+script = ExtResource("2_data")
+id = &"guard_rage"
+display_name = "怒技·破甲斩"
+description = "消耗 RG 100。造成伤害：物理攻击 × 2.5 - 敌防御。"
+class_id = &"guard"
+unlock_level = 5
+mp_cost = 0
+rg_cost = 100
+cooldown = 0
+multiplier_num = 25
+multiplier_den = 10
+uses_magic = false
+
+[sub_resource type="Resource" id="Skill_sorcerer_basic"]
+script = ExtResource("2_data")
+id = &"sorcerer_basic"
+display_name = "普通攻击"
+description = "无消耗。造成伤害：法术攻击 - 敌防御（最低 1）。"
+class_id = &"sorcerer"
+unlock_level = 1
+mp_cost = 0
+rg_cost = 0
+cooldown = 0
+multiplier_num = 10
+multiplier_den = 10
+uses_magic = true
+
+[sub_resource type="Resource" id="Skill_sorcerer_firebolt"]
+script = ExtResource("2_data")
+id = &"sorcerer_firebolt"
+display_name = "火弹"
+description = "消耗 MP 10。造成伤害：法术攻击 × 1.3 - 敌防御。"
+class_id = &"sorcerer"
+unlock_level = 1
+mp_cost = 10
+rg_cost = 0
+cooldown = 0
+multiplier_num = 13
+multiplier_den = 10
+uses_magic = true
+
+[sub_resource type="Resource" id="Skill_sorcerer_flame"]
+script = ExtResource("2_data")
+id = &"sorcerer_flame"
+display_name = "烈焰"
+description = "消耗 MP 16。造成伤害：法术攻击 × 1.8 - 敌防御。"
+class_id = &"sorcerer"
+unlock_level = 3
+mp_cost = 16
+rg_cost = 0
+cooldown = 0
+multiplier_num = 18
+multiplier_den = 10
+uses_magic = true
+
+[sub_resource type="Resource" id="Skill_sorcerer_rage"]
+script = ExtResource("2_data")
+id = &"sorcerer_rage"
+display_name = "怒技·焚天"
+description = "消耗 RG 100。造成伤害：法术攻击 × 2.8 - 敌防御。"
+class_id = &"sorcerer"
+unlock_level = 5
+mp_cost = 0
+rg_cost = 100
+cooldown = 0
+multiplier_num = 28
+multiplier_den = 10
+uses_magic = true
+
+[resource]
+script = ExtResource("1_table")
+skills = [SubResource("Skill_guard_basic"), SubResource("Skill_guard_shield"), SubResource("Skill_guard_power"), SubResource("Skill_guard_rage"), SubResource("Skill_sorcerer_basic"), SubResource("Skill_sorcerer_firebolt"), SubResource("Skill_sorcerer_flame"), SubResource("Skill_sorcerer_rage")]

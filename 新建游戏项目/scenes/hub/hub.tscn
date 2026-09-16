@@ -1,0 +1,153 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scenes/hub/hub_view.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://ui/exp_bar.tscn" id="2_exp"]
+[ext_resource type="PackedScene" path="res://scenes/hd2d/hd2d_world.tscn" id="3_hd2d"]
+
+[sub_resource type="StyleBoxFlat" id="Style_panel"]
+bg_color = Color(0.07, 0.08, 0.1, 0.78)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 20
+content_margin_top = 16
+content_margin_right = 20
+content_margin_bottom = 16
+
+[node name="Hub" type="Node"]
+script = ExtResource("1_script")
+
+[node name="Hd2dWorld" parent="." instance=ExtResource("3_hd2d")]
+unique_name_in_owner = true
+stage_id = &"hub"
+allow_free_camera = true
+
+[node name="UiLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Ui" type="Control" parent="UiLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Margin" type="MarginContainer" parent="UiLayer/Ui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 24
+
+[node name="HBox" type="HBoxContainer" parent="UiLayer/Ui/Margin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 24
+
+[node name="Panel" type="PanelContainer" parent="UiLayer/Ui/Margin/HBox"]
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/panel = SubResource("Style_panel")
+
+[node name="VBox" type="VBoxContainer" parent="UiLayer/Ui/Margin/HBox/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="UiLayer/Ui/Margin/HBox/Panel/VBox"]
+layout_mode = 2
+text = "据点"
+
+[node name="NameLabel" type="Label" parent="UiLayer/Ui/Margin/HBox/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "旅团长"
+
+[node name="ExpBar" parent="UiLayer/Ui/Margin/HBox/Panel/VBox" instance=ExtResource("2_exp")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="GoldLabel" type="Label" parent="UiLayer/Ui/Margin/HBox/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "金币 0"
+
+[node name="RgNoteLabel" type="Label" parent="UiLayer/Ui/Margin/HBox/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "怒气上限 100"
+
+[node name="ClearLabel" type="Label" parent="UiLayer/Ui/Margin/HBox/Panel/VBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "已击败烬狼，通关。"
+
+[node name="Buttons" type="VBoxContainer" parent="UiLayer/Ui/Margin/HBox/Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ExpeditionButton" type="Button" parent="UiLayer/Ui/Margin/HBox/Panel/VBox/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 44)
+layout_mode = 2
+text = "出征"
+
+[node name="CharacterButton" type="Button" parent="UiLayer/Ui/Margin/HBox/Panel/VBox/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 44)
+layout_mode = 2
+text = "角色"
+
+[node name="EquipmentButton" type="Button" parent="UiLayer/Ui/Margin/HBox/Panel/VBox/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 44)
+layout_mode = 2
+text = "装备"
+
+[node name="RestButton" type="Button" parent="UiLayer/Ui/Margin/HBox/Panel/VBox/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 44)
+layout_mode = 2
+text = "休息"
+
+[node name="SaveButton" type="Button" parent="UiLayer/Ui/Margin/HBox/Panel/VBox/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 44)
+layout_mode = 2
+text = "存档"
+
+[node name="HintLabel" type="Label" parent="UiLayer/Ui/Margin/HBox/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="Spacer" type="Control" parent="UiLayer/Ui/Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="CamBox" type="VBoxContainer" parent="UiLayer/Ui/Margin/HBox"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 8
+
+[node name="CameraButton" type="Button" parent="UiLayer/Ui/Margin/HBox/CamBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 36)
+layout_mode = 2
+text = "自由镜头"
+
+[node name="CameraHint" type="Label" parent="UiLayer/Ui/Margin/HBox/CamBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+autowrap_mode = 3
+text = "镜头：固定（按 C 或按钮切到自由）"

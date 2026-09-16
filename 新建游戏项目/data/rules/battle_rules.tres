@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="BattleRulesData" format=3]
+
+[ext_resource type="Script" path="res://data/rules/battle_rules_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+rg_max = 100
+rg_on_attack_hit = 15
+rg_on_take_hit = 10
+rg_on_defend = 20
+rage_cost = 100
+mp_restore_percent = 20
+defend_divisor = 2
+min_undefended_damage = 1
+inventory_cap = 30
+starter_bandage = 3
+starter_water = 3
+name_min_chars = 2
+name_max_chars = 12
+default_hero_name = "旅团长"
+bandage_id = &"p_hp"
+water_id = &"p_mp"

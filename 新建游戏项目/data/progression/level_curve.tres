@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="LevelCurveData" format=3]
+
+[ext_resource type="Script" path="res://data/progression/level_curve_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+level_cap = 10
+base = 20
+per_level = 40
+points_per_level = 3

@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="EnemyTable" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://data/enemies/enemy_table.gd" id="1_table"]
+[ext_resource type="Script" path="res://data/enemies/enemy_data.gd" id="2_data"]
+
+[sub_resource type="Resource" id="Enemy_rat"]
+script = ExtResource("2_data")
+id = &"mob_rat"
+display_name = "灰鼠"
+hp = 30
+phys_atk = 6
+defense = 1
+speed = 8
+reward_exp = 30
+reward_gold = 10
+exp_type = &"mob"
+
+[sub_resource type="Resource" id="Enemy_wolf"]
+script = ExtResource("2_data")
+id = &"mob_wolf"
+display_name = "野狼"
+hp = 70
+phys_atk = 12
+defense = 3
+speed = 12
+reward_exp = 80
+reward_gold = 25
+exp_type = &"mob"
+
+[sub_resource type="Resource" id="Enemy_boss"]
+script = ExtResource("2_data")
+id = &"boss_ember_wolf"
+display_name = "烬狼"
+hp = 160
+phys_atk = 16
+defense = 5
+speed = 10
+reward_exp = 200
+reward_gold = 80
+exp_type = &"boss"
+
+[resource]
+script = ExtResource("1_table")
+enemies = [SubResource("Enemy_rat"), SubResource("Enemy_wolf"), SubResource("Enemy_boss")]

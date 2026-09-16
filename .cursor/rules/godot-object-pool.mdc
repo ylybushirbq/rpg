@@ -1,0 +1,30 @@
+---
+description: 什么节点必须进对象池、什么禁止进池；写战斗演出 / 飘字 / 粒子时必读
+globs: "**/*.{gd,tscn}"
+alwaysApply: false
+---
+
+# 对象池
+
+全文：`docs/编码风格.md` 第 14–16 节。GDScript 引用计数不需要为躲 GC 做池；池化是为了少 `instantiate`。
+
+**会进池（1.1 起有这些东西时）**
+
+- 伤害飘字：12～16，挂 `BattleView` 的 `%FloaterHost`
+- 命中火花 / 短粒子场景：8，挂 `%VfxHost`
+- 重叠命中音：固定 2～4 个 `AudioStreamPlayer`，不要每击 `new`
+- 战斗日志：固定 N 行改 `text`，不要每条 instantiate
+
+**不进池**
+
+- 整屏（创建 / 据点 / 战斗）、玩家和敌人 Actor、技能按钮、血条
+- `.tres` 数据、`BattleResolver` / 步骤结果、`GameState`、`Tween`
+- 2.0 的 2～4 名角色仍然随战斗场景释放，不上角色池
+
+**写法**
+
+- 1.0 没有飘字就不要先做 Autoload 万能池
+- 有类型：`Array[DamageFloater]`，禁止 `call("reset")`
+- 休眠：`visible = false` + `PROCESS_MODE_DISABLED`，禁止对池元素 `queue_free`
+- `_ready` 预热；池满抢走最旧的；还池前 `tween.kill()`；过期 `await` 用播放代数丢掉
+- 常驻 `GPUParticles2D.restart()` 优于每击实例化粒子场景

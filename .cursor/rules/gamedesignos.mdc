@@ -1,0 +1,15 @@
+---
+description: 设计任务走 GameDesignOS skill 与 designos 工作区，不覆盖 1.0 规格
+globs: "designos/**"
+alwaysApply: false
+---
+
+# GameDesignOS 工作区
+
+设计草稿写在 `designos/`。实现范围仍以 `docs/v1.0/最小可玩需求.md` 为准。
+
+- 先读 `docs/GameDesignOS使用说明.md` 再选 skill
+- 用 `Use $skill-name ...` 调用 `.cursor/skills/` 里的专家包
+- 不要把 1.1 及以后的内容写进正在实现的代码
+- 接受/拒绝决策是 Human Gate，不要替用户点承诺
+- 已接受的分期：`docs/版本地图.md`（DEC-VERSION-ROADMAP-001 OPT-001）
