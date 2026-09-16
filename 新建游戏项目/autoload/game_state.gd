@@ -2,15 +2,20 @@ extends Node
 ## 全局进度：角色、背包、药水、已击败节点、切场景。战斗临时状态不放这里。
 
 const CATALOG_PATH := "res://data/game_catalog.tres"
-const SAVE_PATH := "user://saves/auto.json"
+const SAVES_DIRECTORY := "user://saves"
+const LEGACY_SAVE_PATH := "user://saves/auto.json"
+const SAVE_SLOT_COUNT := 3
+const TITLE_SCENE := preload("res://scenes/boot/boot.tscn")
 const CREATE_SCENE := preload("res://scenes/create/create.tscn")
-const HUB_SCENE := preload("res://scenes/hub/hub.tscn")
 const CHARACTER_SCENE := preload("res://scenes/hub/character_page.tscn")
 const EQUIPMENT_SCENE := preload("res://scenes/hub/equipment_page.tscn")
 const EXPEDITION_SCENE := preload("res://scenes/hub/expedition_page.tscn")
 const EXPLORATION_SCENE := preload("res://scenes/exploration/exploration.tscn")
 const BATTLE_SCENE := preload("res://scenes/battle/battle.tscn")
 const STAT_IDS: Array[StringName] = [&"str", &"agi", &"intl", &"con", &"spi", &"luk"]
+const HUB_WORLD_POSITION := Vector3(-6.4, 0.0, -5.8)
+const HUB_ARRIVAL := Vector3(-3.8, 0.0, -3.4)
+const HUB_RADIUS := 2.4
 
 var catalog: GameCatalog
 var hero: PlayerCharacter
@@ -22,13 +27,15 @@ var current_encounter_id: StringName = &""
 var exploration_position: Vector3 = Vector3.ZERO
 var last_reward: RewardReport
 var last_hint: String = ""
+var selected_save_slot: int = 1
 
 
 func _ready() -> void:
 	catalog = load(CATALOG_PATH) as GameCatalog
 	assert(catalog != null, "缺少策划表 res://data/game_catalog.tres")
 	catalog.ensure_index()
-	_try_load()
+	_ensure_save_directory()
+	_migrate_legacy_save()
 
 
 func has_hero() -> bool:
@@ -43,12 +50,82 @@ func is_campaign_cleared() -> bool:
 	return is_node_cleared(&"node_4")
 
 
+func go_title() -> void:
+	_change(TITLE_SCENE)
+
+
 func go_create() -> void:
 	_change(CREATE_SCENE)
 
 
 func go_hub() -> void:
-	_change(HUB_SCENE)
+	exploration_position = HUB_ARRIVAL
+	go_exploration()
+
+
+func has_save() -> bool:
+	return has_any_save()
+
+
+func has_any_save() -> bool:
+	for slot: int in range(1, SAVE_SLOT_COUNT + 1):
+		if slot_exists(slot):
+			return true
+	return false
+
+
+func slot_exists(slot: int) -> bool:
+	return FileAccess.file_exists(_slot_path(slot))
+
+
+func select_save_slot(slot: int) -> bool:
+	if not _is_valid_slot(slot):
+		return false
+	selected_save_slot = slot
+	return true
+
+
+func slot_summary(slot: int) -> String:
+	if not _is_valid_slot(slot):
+		return "无效存档栏位"
+	if not slot_exists(slot):
+		return "栏位 %d　空" % slot
+	var file := FileAccess.open(_slot_path(slot), FileAccess.READ)
+	if file == null:
+		return "栏位 %d　无法读取" % slot
+	var parsed: Variant = JSON.parse_string(file.get_as_text())
+	if typeof(parsed) != TYPE_DICTIONARY:
+		return "栏位 %d　存档损坏" % slot
+	var data := parsed as Dictionary
+	var hero_name := str(data.get("name", "未知角色"))
+	var level := _as_int(data.get("level", 1), 1)
+	return "栏位 %d　%s · Lv.%d" % [slot, hero_name, level]
+
+
+func load_slot(slot: int) -> String:
+	if not _is_valid_slot(slot):
+		return "无效存档栏位"
+	if not slot_exists(slot):
+		return "该栏位没有存档"
+	hero = null
+	corrupt_save_message = ""
+	_try_load_path(_slot_path(slot))
+	if corrupt_save_message != "":
+		return corrupt_save_message
+	if not has_hero():
+		return "没有可用存档"
+	selected_save_slot = slot
+	return ""
+
+
+func load_game() -> String:
+	return load_slot(selected_save_slot)
+
+
+func is_near_hub(world_position: Vector3) -> bool:
+	var flat := Vector3(world_position.x, 0.0, world_position.z)
+	var hub := Vector3(HUB_WORLD_POSITION.x, 0.0, HUB_WORLD_POSITION.z)
+	return flat.distance_to(hub) <= HUB_RADIUS
 
 
 func go_character() -> void:
@@ -106,7 +183,7 @@ func create_hero(hero_name: String, class_id: StringName) -> String:
 	hero.mp = hero.mp_max
 	inventory.clear()
 	cleared_node_ids.clear()
-	exploration_position = Vector3.ZERO
+	exploration_position = HUB_ARRIVAL
 	potions.bandage = rules.starter_bandage
 	potions.water = rules.starter_water
 	corrupt_save_message = ""
@@ -243,7 +320,8 @@ func apply_defeat(resolver: BattleResolver) -> void:
 	hero.mp = hero.mp_max
 	hero.rg = 0
 	last_reward = null
-	last_hint = "战斗失败，已送回据点并回满 HP/MP。没有经验、金币和掉落。"
+	exploration_position = HUB_ARRIVAL
+	last_hint = "战斗失败，已送回地图据点并回满 HP/MP。没有经验、金币和掉落。"
 	current_encounter_id = &""
 	save_game()
 
@@ -260,21 +338,20 @@ func abort_battle(resolver: BattleResolver) -> void:
 func save_game() -> void:
 	if not has_hero():
 		return
-	var abs_dir := ProjectSettings.globalize_path("user://saves")
-	DirAccess.make_dir_recursive_absolute(abs_dir)
+	_ensure_save_directory()
 	var payload := _to_save_dict()
-	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	var file := FileAccess.open(_slot_path(selected_save_slot), FileAccess.WRITE)
 	if file == null:
 		push_error("无法写入存档: %s" % error_string(FileAccess.get_open_error()))
 		return
 	file.store_string(JSON.stringify(payload, "\t"))
 
 
-func _try_load() -> void:
+func _try_load_path(path: String) -> void:
 	corrupt_save_message = ""
-	if not FileAccess.file_exists(SAVE_PATH):
+	if not FileAccess.file_exists(path):
 		return
-	var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
+	var file := FileAccess.open(path, FileAccess.READ)
 	if file == null:
 		corrupt_save_message = "存档无法读取，将从创建角色开始。"
 		return
@@ -286,6 +363,30 @@ func _try_load() -> void:
 	if not _apply_save_dict(data):
 		hero = null
 		corrupt_save_message = "存档损坏，将从创建角色开始。"
+
+
+func _ensure_save_directory() -> void:
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(SAVES_DIRECTORY))
+
+
+func _migrate_legacy_save() -> void:
+	if not FileAccess.file_exists(LEGACY_SAVE_PATH) or slot_exists(1):
+		return
+	var legacy := FileAccess.open(LEGACY_SAVE_PATH, FileAccess.READ)
+	if legacy == null:
+		return
+	var migrated := FileAccess.open(_slot_path(1), FileAccess.WRITE)
+	if migrated == null:
+		return
+	migrated.store_string(legacy.get_as_text())
+
+
+func _slot_path(slot: int) -> String:
+	return "%s/slot_%d.json" % [SAVES_DIRECTORY, slot]
+
+
+func _is_valid_slot(slot: int) -> bool:
+	return slot >= 1 and slot <= SAVE_SLOT_COUNT
 
 
 func _to_save_dict() -> Dictionary:

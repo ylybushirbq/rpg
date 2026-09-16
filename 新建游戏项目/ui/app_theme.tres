@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=2 format=3]
+[gd_resource type="Theme" format=3 uid="uid://cvh3bb2j0tdf2"]
 
 [sub_resource type="SystemFont" id="SystemFont_zh"]
 font_names = PackedStringArray("Microsoft YaHei UI", "Microsoft YaHei", "SimHei")

@@ -61,6 +61,18 @@ reset_camera={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"physical_keycode":67)]
 }
+interact={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"physical_keycode":69)]
+}
+open_bag={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"physical_keycode":66)]
+}
+toggle_run={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"physical_keycode":4194325)]
+}
 
 [physics]
 

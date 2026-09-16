@@ -40,7 +40,7 @@ var _busy: bool = false
 
 func _ready() -> void:
 	if GameState.current_encounter_id == &"":
-		GameState.go_hub()
+		GameState.go_title()
 		return
 	_style_bar(_player_hp_bar, Color(0.75, 0.22, 0.22))
 	_style_bar(_player_mp_bar, Color(0.25, 0.45, 0.85))
@@ -216,7 +216,7 @@ func _finish_defeat() -> void:
 	_result_panel.visible = true
 	_abort_button.visible = false
 	_result_title.text = "失败"
-	_result_body.text = "HP 归零。送回据点并回满 HP/MP。没有经验、金币和掉落。"
+	_result_body.text = "HP 归零。送回地图据点并回满 HP/MP。没有经验、金币和掉落。"
 	_result_exp.visible = false
 
 

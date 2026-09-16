@@ -1,0 +1,317 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scenes/inventory/backpack_view.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://ui/exp_bar.tscn" id="2_exp"]
+[ext_resource type="PackedScene" path="res://ui/save_slot_picker.tscn" id="3_slots"]
+
+[node name="Backpack" type="CanvasLayer"]
+layer = 12
+visible = false
+script = ExtResource("1_script")
+
+[node name="Root" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.05, 0.07, 0.72)
+
+[node name="Panel" type="PanelContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -460.0
+offset_top = -300.0
+offset_right = 460.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="Root/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="Root/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Header" type="HBoxContainer" parent="Root/Panel/Margin/VBox"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Root/Panel/Margin/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "背包"
+
+[node name="CloseButton" type="Button" parent="Root/Panel/Margin/VBox/Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(88, 32)
+layout_mode = 2
+text = "关闭"
+
+[node name="Tabs" type="TabContainer" parent="Root/Panel/Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="角色" type="MarginContainer" parent="Root/Panel/Margin/VBox/Tabs"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="CharScroll" type="ScrollContainer" parent="Root/Panel/Margin/VBox/Tabs/角色"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="CharBox" type="VBoxContainer" parent="Root/Panel/Margin/VBox/Tabs/角色/CharScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="NameLabel" type="Label" parent="Root/Panel/Margin/VBox/Tabs/角色/CharScroll/CharBox"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ExpBar" parent="Root/Panel/Margin/VBox/Tabs/角色/CharScroll/CharBox" instance=ExtResource("2_exp")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="GoldLabel" type="Label" parent="Root/Panel/Margin/VBox/Tabs/角色/CharScroll/CharBox"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DerivedLabel" type="Label" parent="Root/Panel/Margin/VBox/Tabs/角色/CharScroll/CharBox"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="PointsLabel" type="Label" parent="Root/Panel/Margin/VBox/Tabs/角色/CharScroll/CharBox"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="StatBox" type="VBoxContainer" parent="Root/Panel/Margin/VBox/Tabs/角色/CharScroll/CharBox"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SkillLabel" type="Label" parent="Root/Panel/Margin/VBox/Tabs/角色/CharScroll/CharBox"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="CharHint" type="Label" parent="Root/Panel/Margin/VBox/Tabs/角色/CharScroll/CharBox"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="道具" type="MarginContainer" parent="Root/Panel/Margin/VBox/Tabs"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="ItemBox" type="VBoxContainer" parent="Root/Panel/Margin/VBox/Tabs/道具"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ItemTitle" type="Label" parent="Root/Panel/Margin/VBox/Tabs/道具/ItemBox"]
+layout_mode = 2
+text = "道具"
+
+[node name="ItemLabel" type="Label" parent="Root/Panel/Margin/VBox/Tabs/道具/ItemBox"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="ItemHint" type="Label" parent="Root/Panel/Margin/VBox/Tabs/道具/ItemBox"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="装备" type="MarginContainer" parent="Root/Panel/Margin/VBox/Tabs"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="EquipSplit" type="HBoxContainer" parent="Root/Panel/Margin/VBox/Tabs/装备"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="EquipLeft" type="VBoxContainer" parent="Root/Panel/Margin/VBox/Tabs/装备/EquipSplit"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="WeaponLabel" type="Label" parent="Root/Panel/Margin/VBox/Tabs/装备/EquipSplit/EquipLeft"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "武器：空"
+
+[node name="UnequipWeaponButton" type="Button" parent="Root/Panel/Margin/VBox/Tabs/装备/EquipSplit/EquipLeft"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 32)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "卸下武器"
+
+[node name="ArmorLabel" type="Label" parent="Root/Panel/Margin/VBox/Tabs/装备/EquipSplit/EquipLeft"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "防具：空"
+
+[node name="UnequipArmorButton" type="Button" parent="Root/Panel/Margin/VBox/Tabs/装备/EquipSplit/EquipLeft"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 32)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "卸下防具"
+
+[node name="AccessoryLabel" type="Label" parent="Root/Panel/Margin/VBox/Tabs/装备/EquipSplit/EquipLeft"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "饰品：空"
+
+[node name="UnequipAccessoryButton" type="Button" parent="Root/Panel/Margin/VBox/Tabs/装备/EquipSplit/EquipLeft"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 32)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "卸下饰品"
+
+[node name="EquipStats" type="Label" parent="Root/Panel/Margin/VBox/Tabs/装备/EquipSplit/EquipLeft"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="EquipHint" type="Label" parent="Root/Panel/Margin/VBox/Tabs/装备/EquipSplit/EquipLeft"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="EquipRight" type="VBoxContainer" parent="Root/Panel/Margin/VBox/Tabs/装备/EquipSplit"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="BagTitle" type="Label" parent="Root/Panel/Margin/VBox/Tabs/装备/EquipSplit/EquipRight"]
+layout_mode = 2
+text = "未装备"
+
+[node name="BagList" type="ItemList" parent="Root/Panel/Margin/VBox/Tabs/装备/EquipSplit/EquipRight"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 220)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="EmptyLabel" type="Label" parent="Root/Panel/Margin/VBox/Tabs/装备/EquipSplit/EquipRight"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "背包是空的"
+
+[node name="EquipButton" type="Button" parent="Root/Panel/Margin/VBox/Tabs/装备/EquipSplit/EquipRight"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "穿上"
+
+[node name="设置" type="MarginContainer" parent="Root/Panel/Margin/VBox/Tabs"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="SettingsBox" type="VBoxContainer" parent="Root/Panel/Margin/VBox/Tabs/设置"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ResetCameraButton" type="Button" parent="Root/Panel/Margin/VBox/Tabs/设置/SettingsBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "重置镜头"
+
+[node name="TitleButton" type="Button" parent="Root/Panel/Margin/VBox/Tabs/设置/SettingsBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "返回开始页"
+
+[node name="QuitButton" type="Button" parent="Root/Panel/Margin/VBox/Tabs/设置/SettingsBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "退出游戏"
+
+[node name="存档" type="MarginContainer" parent="Root/Panel/Margin/VBox/Tabs"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="SaveBox" type="VBoxContainer" parent="Root/Panel/Margin/VBox/Tabs/存档"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SaveNote" type="Label" parent="Root/Panel/Margin/VBox/Tabs/存档/SaveBox"]
+layout_mode = 2
+text = "可使用三个独立存档栏位。战斗和回开始页会自动保存到当前栏位。"
+autowrap_mode = 3
+
+[node name="SaveButton" type="Button" parent="Root/Panel/Margin/VBox/Tabs/存档/SaveBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "存档"
+
+[node name="LoadButton" type="Button" parent="Root/Panel/Margin/VBox/Tabs/存档/SaveBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "读档"
+
+[node name="SaveHint" type="Label" parent="Root/Panel/Margin/VBox/Tabs/存档/SaveBox"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="SlotPicker" parent="." instance=ExtResource("3_slots")]
+unique_name_in_owner = true
+
+[node name="OverwriteDialog" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+title = "确认覆盖"
+ok_button_text = "确定"
+cancel_button_text = "取消"

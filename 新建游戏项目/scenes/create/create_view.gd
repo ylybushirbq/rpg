@@ -5,6 +5,7 @@ extends Control
 @onready var _guard_button: Button = %GuardButton
 @onready var _sorcerer_button: Button = %SorcererButton
 @onready var _start_button: Button = %StartButton
+@onready var _back_button: Button = %BackButton
 @onready var _hint_label: Label = %HintLabel
 
 var _class_id: StringName = &"guard"
@@ -16,6 +17,7 @@ func _ready() -> void:
 	_guard_button.pressed.connect(_on_guard_button_pressed)
 	_sorcerer_button.pressed.connect(_on_sorcerer_button_pressed)
 	_start_button.pressed.connect(_on_start_button_pressed)
+	_back_button.pressed.connect(_on_back_button_pressed)
 	_refresh_class_buttons()
 
 
@@ -34,7 +36,11 @@ func _on_start_button_pressed() -> void:
 	if reason != "":
 		_hint_label.text = reason
 		return
-	GameState.go_hub()
+	GameState.go_exploration()
+
+
+func _on_back_button_pressed() -> void:
+	GameState.go_title()
 
 
 func _refresh_class_buttons() -> void:
@@ -44,3 +50,5 @@ func _refresh_class_buttons() -> void:
 		_hint_label.text = "卫士：体质成长，物理技能。"
 	else:
 		_hint_label.text = "咒术师：智力成长，法术技能。"
+	if GameState.has_save():
+		_hint_label.text += " 开始后会覆盖现有存档。"

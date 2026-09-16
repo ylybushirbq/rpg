@@ -81,7 +81,13 @@ text = "咒术师"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
-text = "开始"
+text = "进入地图"
+
+[node name="BackButton" type="Button" parent="Center/Panel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "返回"
 
 [node name="HintLabel" type="Label" parent="Center/Panel"]
 unique_name_in_owner = true
