@@ -9,6 +9,9 @@ const HUB_SIDE_TEXTURE := preload("res://assets/map/hub_side.png")
 const HUB_TOP_TEXTURE_PATH := "res://assets/map/hub_top.png"
 const TREE_TEXTURE := preload("res://assets/map/dead_tree.png")
 const ROCK_TEXTURE := preload("res://assets/map/ash_rocks.png")
+## HD-2D 斜视镜头下，竖直 BILLBOARD_FIXED_Y 即使底边在 y=0 仍会显得离地。把精灵略埋进地面抵消光学漂浮；碰撞盒保持贴地。
+const TREE_BILLBOARD_GROUND_SINK: float = 0.11
+const ROCK_BILLBOARD_GROUND_SINK: float = 0.08
 const HERO_TEXTURE_PATH := "res://assets/characters/hero.png"
 const PLAYER_COLOR := Color(0.32, 0.52, 0.82, 1)
 const ENEMY_COLOR := Color(0.78, 0.28, 0.24, 1)
@@ -136,12 +139,12 @@ func _build_map_props() -> void:
 	for child: Node in _prop_host.get_children():
 		child.queue_free()
 	_add_hub_building(GameState.HUB_WORLD_POSITION)
-	_add_billboard(TREE_TEXTURE, Vector3(7.2, 0.0, -6.4), 0.0045, Vector3(0.8, 2.2, 0.8))
-	_add_billboard(TREE_TEXTURE, Vector3(-8.6, 0.0, 3.8), 0.0041, Vector3(0.72, 2.0, 0.72))
-	_add_billboard(TREE_TEXTURE, Vector3(4.8, 0.0, 7.1), 0.0038, Vector3(0.68, 1.8, 0.68))
-	_add_billboard(ROCK_TEXTURE, Vector3(8.4, 0.0, 2.2), 0.0028, Vector3(1.1, 1.25, 0.9))
-	_add_billboard(ROCK_TEXTURE, Vector3(-2.6, 0.0, 7.4), 0.0025, Vector3(0.92, 1.05, 0.8))
-	_add_billboard(ROCK_TEXTURE, Vector3(-9.0, 0.0, -2.4), 0.0024, Vector3(0.86, 0.98, 0.76))
+	_add_billboard(TREE_TEXTURE, Vector3(7.2, 0.0, -6.4), 0.0045, Vector3(0.8, 2.2, 0.8), TREE_BILLBOARD_GROUND_SINK)
+	_add_billboard(TREE_TEXTURE, Vector3(-8.6, 0.0, 3.8), 0.0041, Vector3(0.72, 2.0, 0.72), TREE_BILLBOARD_GROUND_SINK)
+	_add_billboard(TREE_TEXTURE, Vector3(4.8, 0.0, 7.1), 0.0038, Vector3(0.68, 1.8, 0.68), TREE_BILLBOARD_GROUND_SINK)
+	_add_billboard(ROCK_TEXTURE, Vector3(8.4, 0.0, 2.2), 0.0028, Vector3(1.1, 1.25, 0.9), ROCK_BILLBOARD_GROUND_SINK)
+	_add_billboard(ROCK_TEXTURE, Vector3(-2.6, 0.0, 7.4), 0.0025, Vector3(0.92, 1.05, 0.8), ROCK_BILLBOARD_GROUND_SINK)
+	_add_billboard(ROCK_TEXTURE, Vector3(-9.0, 0.0, -2.4), 0.0024, Vector3(0.86, 0.98, 0.76), ROCK_BILLBOARD_GROUND_SINK)
 
 
 func _add_hub_building(pos: Vector3) -> void:
@@ -215,6 +218,7 @@ func _add_billboard(
 		ground_position: Vector3,
 		pixel_size: float,
 		collision_size: Vector3,
+		ground_sink: float = 0.1,
 ) -> void:
 	var sprite := Sprite3D.new()
 	sprite.texture = texture
@@ -224,7 +228,8 @@ func _add_billboard(
 	sprite.alpha_cut = SpriteBase3D.ALPHA_CUT_DISABLED
 	sprite.double_sided = false
 	sprite.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	sprite.position = ground_position + Vector3.UP * (texture.get_height() * pixel_size * 0.5)
+	# 贴图矩形底边先对齐地面，再减去 sink，把树根/石底埋进 PlaneMesh（y=0）。
+	sprite.position = ground_position + Vector3.UP * (texture.get_height() * pixel_size * 0.5 - ground_sink)
 	sprite.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 	_prop_host.add_child(sprite)
 	_add_collision_box(_prop_host, collision_size, Vector3(
